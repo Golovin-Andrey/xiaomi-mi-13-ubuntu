@@ -53,7 +53,7 @@ Here you can create links, but i just copied. Update initramfs.
 ```
 sudo cp /tmp/kbl_dmc_ver1_01.bin /lib/firmware/i915/kbl_dmc_ver1.bin
 sudo cp /tmp/skl_guc_ver6_1.bin /lib/firmware/i915/skl_guc_ver6.bin
-sudo  update-initramfs -k `uname -r` -u
+sudo  update-initramfs -k $(uname -r) -u
 ```
 * Once drivers installed, just activate laptopmode. You can add second line to /etc/rc.local in line before exit 0
 ```
