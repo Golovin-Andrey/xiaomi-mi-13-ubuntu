@@ -55,10 +55,21 @@ sudo cp /tmp/kbl_dmc_ver1_01.bin /lib/firmware/i915/kbl_dmc_ver1.bin
 sudo cp /tmp/skl_guc_ver6_1.bin /lib/firmware/i915/skl_guc_ver6.bin
 sudo  update-initramfs -k `uname -r` -u
 ```
-Once drivers installed, just activate laptopmode. You can add second line to /etc/rc.local in line before exit 0
+* Once drivers installed, just activate laptopmode. You can add second line to /etc/rc.local in line before exit 0
 ```
 sudo -i
 echo 5 > /proc/sys/vm/laptop_mode
+```
+you also may want remove bluetooth and camera modules from kernel
+```
+modprobe -r btusb
+modprobe -r uvcvideo
+```
+One think more, switch to intel video card with prime-select
+```
+sudo prime-select intel
+sudo prime-select quiery
+
 ```
 
 After this step I got about 4W power consumption with wifi on at screen brightness 5%  running awesome wm. 
@@ -68,4 +79,9 @@ sleep 180
 upower -d
 ```
 ![alt text](https://github.com/Golovin-Andrey/xiaomi-mi-13-ubuntu/blob/master/power-drivers.png "Power consumption")
+
+* Installation tlp and tlp radio with default settings can reduce power to bit less in my case 3.97W
+* In my case, when I removed  btusb, uvcvideo, iwlwifi modules  i got only 3.8W . I can conclude that these drivers are  realy efficient.
+
+### Conclusion: with proper drivers xiaomi air 13 power consumption in ubuntu is just equal to windows 10 one. Timelife is about 10 hours.
 
