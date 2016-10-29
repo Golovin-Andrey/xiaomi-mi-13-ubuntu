@@ -24,11 +24,11 @@
  ## Configuration
  * Unlock secure boot: follow instructions on blue screen. 
  * WiFi:
- ```
- sudo modprobe -r acer_wmi
- sudo service network-manager restart
- sudo -i
- echo 'blacklist acer_wmi' >> /etc/modprobe.d/blacklist.conf
+```
+sudo modprobe -r acer_wmi
+sudo service network-manager restart
+sudo -i
+echo 'blacklist acer_wmi' >> /etc/modprobe.d/blacklist.conf
 exit
 ```
 * NVIDIA blob, I used version 370, but 367 is stable
@@ -43,4 +43,16 @@ In result you will get two errors with  intel video firmware:
 W: Possible missing firmware /lib/firmware/i915/kbl_dmc_ver1.bin for module i915_bpo
 W: Possible missing firmware /lib/firmware/i915/skl_guc_ver6.bin for module i915_bpo
 ```
-Download it from  
+Download it from   http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/tree/i915
+```
+cd /tmp/
+wget http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/tree/i915/skl_guc_ver6_1.bin
+wget http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/tree/i915/kbl_dmc_ver1_01.bin
+```
+Here you can create links, but i just copied. Update initramfs.
+```
+sudo cp /tmp/kbl_dmc_ver1_01.bin /lib/firmware/i915/kbl_dmc_ver1.bin
+sudo cp /tmp/skl_guc_ver6_1.bin /lib/firmware/i915/skl_guc_ver6.bin
+sudo  update-initramfs -k `uname -r` -u
+```
+
