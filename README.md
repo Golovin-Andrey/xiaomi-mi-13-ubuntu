@@ -67,5 +67,5 @@ xbacklight -set 5
 sleep 180
 upower -d
 ```
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![alt text](https://github.com/Golovin-Andrey/xiaomi-mi-13-ubuntu/blob/master/power-drivers.png "Power consumption")
 
