@@ -55,4 +55,17 @@ sudo cp /tmp/kbl_dmc_ver1_01.bin /lib/firmware/i915/kbl_dmc_ver1.bin
 sudo cp /tmp/skl_guc_ver6_1.bin /lib/firmware/i915/skl_guc_ver6.bin
 sudo  update-initramfs -k `uname -r` -u
 ```
+Once drivers installed, just activate laptopmode. You can add second line to /etc/rc.local in line before exit 0
+```
+sudo -i
+echo 5 > /proc/sys/vm/laptop_mode
+```
+
+After this step I got about 4W power consumption with wifi on at screen brightness 5%  running awesome wm. 
+```
+xbacklight -set 5
+sleep 180
+upower -d
+```
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
 
