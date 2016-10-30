@@ -1,6 +1,7 @@
 
 #Xiaomi Air 13: minimal Ubuntu installation  and power optimization steps
 
+
 ## Preparation
 
  * Make bootable flash drive. Personally I don't use flash drives and I have only one with some files on it. I used this wiki https://wiki.archlinux.org/index.php/Multiboot_USB_drive to prepare multi boot usb.
@@ -32,6 +33,7 @@ echo 'blacklist acer_wmi' >> /etc/modprobe.d/blacklist.conf
 exit
 ```
 * NVIDIA blob, I used version 370, but 367 is stable
+> Warning: Don't do  it on Debian. Use How-to for NVIDIA driver from official wiki
 ``` 
 sudo add-apt-repository ppa:graphics-drivers/ppa 
 sudo apt update
