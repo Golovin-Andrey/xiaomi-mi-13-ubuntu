@@ -1,5 +1,5 @@
 
-#Minimal Ubuntu Installation  and power optimization steps
+#Xiaomi Air 13: minimal Ubuntu installation  and power optimization steps
 
 ## Preparation
 
@@ -82,6 +82,38 @@ upower -d
 
 * Installation tlp and tlp radio with default settings can reduce power to bit less in my case 3.97W
 * In my case, when I removed  btusb, uvcvideo, iwlwifi modules  i got only 3.8W . I can conclude that these drivers are  realy efficient.
+* And finaly I removed XFCE and get no improvement in energy-rate 
 
 ### Conclusion: with proper drivers xiaomi air 13 power consumption in ubuntu is just equal to windows 10 one. Timelife is about 10 hours.
 
+## Some tricks
+
+* For proper sleep and hybernate edit /etc/systemd/logind.conf , my noncomented lines are:
+```
+InhibitDelayMaxSec=5
+HandlePowerKey=hibernate
+HandleSuspendKey=suspend
+HandleHibernateKey=hibernate
+HandleLidSwitch=suspend
+```
+
+* I use autofs to mount flash and samba/nfs resourses. Configs are folder autofs
+
+* For awesome wm brightness control was done with xbacklight
+```
+    awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn("xbacklight -dec 5") end),
+    awful.key({ }, "XF86MonBrightnessUp",   function () awful.util.spawn("xbacklight -inc 5") end),
+```
+
+* I use parcellite to manage clipboard, It's cool thing 
+```
+  parcellite -n &
+```
+
+* I added to /etc/rc.local , I don't want blacklist it.
+```
+# remove camera
+modprobe -r uvcvideo
+# remove bt
+modeprobe -r btusb
+```
