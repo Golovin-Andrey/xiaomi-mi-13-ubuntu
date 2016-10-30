@@ -33,7 +33,9 @@ echo 'blacklist acer_wmi' >> /etc/modprobe.d/blacklist.conf
 exit
 ```
 * NVIDIA blob, I used version 370, but 367 is stable
+
 > Warning: Don't do  it on Debian. Use How-to for NVIDIA driver from official wiki
+
 ``` 
 sudo add-apt-repository ppa:graphics-drivers/ppa 
 sudo apt update
