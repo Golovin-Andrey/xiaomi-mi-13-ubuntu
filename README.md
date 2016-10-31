@@ -123,3 +123,44 @@ HandleLidSwitch=suspend
 # remove camera
 modprobe -r uvcvideo
 ```
+
+* PRIME technology with bumblebee : 
+ > warning ! it's just unstable, probably you may want wait for bumblebee 4.0
+ ```
+ sudo add-apt-repository ppa:bumblebee/testing
+ sudo apt update
+ sudo apt upgrade
+ ```
+
+ Edit `/etc/bumblebee/bumblebee.conf` 
+  
+ * adjust kernel driver to `KernelDriver=nvidia`
+ * replace `nvidia-current` to `nvidia-370` in 
+ ```
+ # colon-separated path to the nvidia libraries
+LibraryPath=/usr/lib/nvidia-370:/usr/lib32/nvidia-370
+# comma-separated path of the directory containing nvidia_drv.so and the
+# default Xorg modules path
+XorgModulePath=/usr/lib/nvidia-370/xorg,/usr/lib/xorg/modules
+```
+ * stop bumblebee service and run in debug mode
+```
+sudo service bumblebee stop
+sudo bumblebeed --debug
+```
+ 
+ * run glxgears in new terminal and check for ERROR lines in bumblebee output
+```
+primusrun glxgears
+```
+
+ normal output is :
+ ```
+[  579.639172] [INFO]Unloading module nvidia_drm
+[  579.648303] [INFO]Unloading module nvidia_modeset
+[  579.668459] [INFO]Unloading module nvidia_uvm
+[  579.688268] [INFO]Unloading module nvidia
+[  579.713437] [INFO]Switching dedicated card OFF [bbswitch]
+[  579.729761] [DEBUG][XORG] (II) NVIDIA(GPU-0): Deleting GPU-0
+
+ ```
