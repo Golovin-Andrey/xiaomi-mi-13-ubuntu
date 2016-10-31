@@ -124,15 +124,18 @@ HandleLidSwitch=suspend
 modprobe -r uvcvideo
 ```
 
-* PRIME technology with bumblebee : 
- > warning ! it's just unstable, probably you may want wait for bumblebee 4.0
+## PRIME technology with bu
+
+* Installation
+
+> warning ! it's just unstable, probably you may want wait for bumblebee 4.0
  ```
  sudo add-apt-repository ppa:bumblebee/testing
  sudo apt update
  sudo apt upgrade
  ```
 
- Edit `/etc/bumblebee/bumblebee.conf` 
+Edit `/etc/bumblebee/bumblebee.conf` 
   
  * adjust kernel driver to `KernelDriver=nvidia`
  * replace `nvidia-current` to `nvidia-370` in 
@@ -143,6 +146,7 @@ LibraryPath=/usr/lib/nvidia-370:/usr/lib32/nvidia-370
 # default Xorg modules path
 XorgModulePath=/usr/lib/nvidia-370/xorg,/usr/lib/xorg/modules
 ```
+* Checking 
  * stop bumblebee service and run in debug mode
 ```
 sudo service bumblebee stop
@@ -154,7 +158,7 @@ sudo bumblebeed --debug
 primusrun glxgears
 ```
 
- normal output is :
+normal output is :
  ```
 [  579.639172] [INFO]Unloading module nvidia_drm
 [  579.648303] [INFO]Unloading module nvidia_modeset
@@ -164,3 +168,14 @@ primusrun glxgears
 [  579.729761] [DEBUG][XORG] (II) NVIDIA(GPU-0): Deleting GPU-0
 
  ```
+ 
+ bbswitch output should be OFF
+ ```
+cat /proc/acpi/bbswitch; primusrun glxinfo|grep vendor ; cat /proc/acpi/bbswitch; sleep 5; cat /proc/acpi/bbswitch
+0000:01:00.0 OFF
+server glx vendor string: NVIDIA Corporation
+client glx vendor string: primus
+OpenGL vendor string: NVIDIA Corporation
+0000:01:00.0 ON
+0000:01:00.0 OFF
+```
