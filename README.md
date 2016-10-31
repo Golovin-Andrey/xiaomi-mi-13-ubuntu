@@ -91,6 +91,10 @@ upower -d
 ### Conclusion: with proper drivers xiaomi air 13 power consumption in ubuntu is just equal to windows 10 one. Timelife is about 10 hours.
 
 ## Some tricks
+* Swich off wifi
+```
+nmcli r wifi off
+```
 
 * For proper sleep and hybernate edit /etc/systemd/logind.conf , my noncomented lines are:
 ```
@@ -118,6 +122,4 @@ HandleLidSwitch=suspend
 ```
 # remove camera
 modprobe -r uvcvideo
-# remove bt
-modeprobe -r btusb
 ```
