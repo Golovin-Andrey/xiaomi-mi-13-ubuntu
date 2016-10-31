@@ -171,7 +171,7 @@ normal output is :
  
  bbswitch output should be OFF
  ```
-cat /proc/acpi/bbswitch; primusrun glxinfo|grep vendor ; cat /proc/acpi/bbswitch; sleep 5; cat /proc/acpi/bbswitch
+~$ cat /proc/acpi/bbswitch; primusrun glxinfo|grep vendor ; cat /proc/acpi/bbswitch; sleep 5; cat /proc/acpi/bbswitch
 0000:01:00.0 OFF
 server glx vendor string: NVIDIA Corporation
 client glx vendor string: primus
