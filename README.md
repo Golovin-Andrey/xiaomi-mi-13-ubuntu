@@ -179,3 +179,8 @@ OpenGL vendor string: NVIDIA Corporation
 0000:01:00.0 ON
 0000:01:00.0 OFF
 ```
+
+now you can run your games:)
+```
+primusrun steam
+```
