@@ -1,0 +1,85 @@
+#!/bin/bash
+
+# This file must be executable to work! chmod 755!
+
+# Automagically mount CIFS shares in the network, similar to
+# what autofs -hosts does for NFS.
+
+# Put a line like the following in /etc/auto.master:
+# /cifs  /etc/auto.smb --timeout=300
+# You'll be able to access Windows and Samba shares in your network
+# under /cifs/host.domain/share
+
+# "smbclient -L" is used to obtain a list of shares from the given host.
+# In some environments, this requires valid credentials.
+
+# This script knows 2 methods to obtain credentials:
+# 1) if a credentials file (see mount.cifs(8)) is present
+#    under /etc/creds/$key, use it.
+# 2) Otherwise, try to find a usable kerberos credentials cache
+#    for the uid of the user that was first to trigger the mount
+#    and use that.
+# If both methods fail, the script will try to obtain the list
+# of shares anonymously.
+
+get_krb5_cache() {
+    cache=
+    uid=${UID}
+    for x in $(ls -d /run/user/$uid/krb5cc_* 2>/dev/null); do
+        if [ -d "$x" ] && klist -s DIR:"$x"; then
+	    cache=DIR:$x
+            return
+        fi
+    done
+    if [ -f /tmp/krb5cc_$uid ] && klist -s /tmp/krb5cc_$uid; then
+	    cache=/tmp/krb5cc_$uid
+	    return
+    fi
+}
+
+key="$1"
+opts="-fstype=cifs"
+
+for P in /bin /sbin /usr/bin /usr/sbin
+do
+	if [ -x $P/smbclient ]
+	then
+		SMBCLIENT=$P/smbclient
+		break
+	fi
+done
+
+[ -x $SMBCLIENT ] || exit 1
+
+creds=/etc/creds/$key
+if [ -f "$creds" ]; then
+    opts="$opts"',uid=$UID,gid=$GID,credentials='"$creds"
+    smbopts="-A $creds"
+else
+    get_krb5_cache
+    if [ -n "$cache" ]; then
+        opts="$opts"',multiuser,cruid=$UID,sec=krb5i'
+        smbopts="-k"
+        export KRB5CCNAME=$cache
+    else
+        opts="$opts"',guest'
+        smbopts="-N"
+    fi
+fi
+
+$SMBCLIENT $smbopts -gL "$key" 2>/dev/null| awk -v "key=$key" -v "opts=$opts" -F '|' -- '
+	BEGIN	{ ORS=""; first=1 }
+	/Disk/	{
+		  if (first)
+			print opts; first=0
+		  dir = $2
+		  loc = $2
+		  # Enclose mount dir and location in quotes
+		  # Double quote "$" in location as it is special
+		  gsub(/\$$/, "\\$", loc);
+		  gsub(/\&/,"\\\\&",loc)
+		  print " \\\n\t \"/" dir "\"", "\"://" key "/" loc "\""
+		}
+	END 	{ if (!first) print "\n"; else exit 1 }
+	'
+

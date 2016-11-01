@@ -1,0 +1,25 @@
+#############################################################################
+# Id: match-all.action,v
+#
+# This file contains the actions that are applied to all requests and
+# may be overruled later on by other actions files. Less experienced
+# users should only edit this file through the actions file editor.
+#
+#############################################################################
+{ \
++change-x-forwarded-for{block} \
++client-header-tagger{css-requests} \
++client-header-tagger{image-requests} \
++deanimate-gifs{last} \
++filter{refresh-tags} \
++filter{img-reorder} \
++filter{banners-by-size} \
++filter{webbugs} \
++filter{jumping-windows} \
++filter{ie-exploits} \
++hide-from-header{block} \
++hide-referrer{conditional-block} \
++session-cookies-only \
++set-image-blocker{pattern} \
+}
+/ # Match all URLs

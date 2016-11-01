@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# This file must be executable to work! chmod 755!
+
+# Look at what a host is exporting to determine what we can mount.
+# This is very simple, but it appears to work surprisingly well
+
+key="$1"
+
+# add "nosymlink" here if you want to suppress symlinking local filesystems
+# add "nonstrict" to make it OK for some filesystems to not mount
+# choose one of the two lines below depending on the NFS version in your
+# environment
+opts="-fstype=nfs,hard,intr,nodev,nosuid"
+#opts="-fstype=nfs4,hard,intr,nodev,nosuid,async"
+
+for P in /bin /sbin /usr/bin /usr/sbin
+do
+	for M in showmount kshowmount
+	do
+		if [ -x $P/$M ]
+		then
+			SMNT=$P/$M
+			break 2
+		fi
+	done
+done
+
+[ -x $SMNT ] || exit 1
+
+# Newer distributions get this right
+SHOWMOUNT="$SMNT --no-headers -e $key"
+
+$SHOWMOUNT | LC_ALL=C cut -d' ' -f1 | LC_ALL=C sort -u | \
+	awk -v key="$key" -v opts="$opts" -- '
+	BEGIN	{ ORS=""; first=1 }
+		{ if (first) { print opts; first=0 }; print " \\\n\t" $1, key ":" $1 }
+	END	{ if (!first) print "\n"; else exit 1 }
+	' | sed 's/#/\\#/g'
