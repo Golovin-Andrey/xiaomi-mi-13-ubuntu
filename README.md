@@ -25,6 +25,7 @@
  ## Configuration
  * Unlock secure boot: follow instructions on blue screen. 
  * WiFi:
+ 
 ```
 sudo modprobe -r acer_wmi
 sudo service network-manager restart
@@ -43,33 +44,39 @@ sudo apt dist-upgrade
 sudo apt install  nvidia-370
 ```
 In result you will get two errors with  intel video firmware:
+
 ```
 W: Possible missing firmware /lib/firmware/i915/kbl_dmc_ver1.bin for module i915_bpo
 W: Possible missing firmware /lib/firmware/i915/skl_guc_ver6.bin for module i915_bpo
 ```
 Download it from   http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/tree/i915
+
 ```
 cd /tmp/
 wget http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/tree/i915/skl_guc_ver6_1.bin
 wget http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/tree/i915/kbl_dmc_ver1_01.bin
 ```
 Here you can create links, but i just copied. Update initramfs.
+
 ```
 sudo cp /tmp/kbl_dmc_ver1_01.bin /lib/firmware/i915/kbl_dmc_ver1.bin
 sudo cp /tmp/skl_guc_ver6_1.bin /lib/firmware/i915/skl_guc_ver6.bin
 sudo  update-initramfs -k $(uname -r) -u
 ```
 * Once drivers installed, just activate laptopmode. You can add second line to /etc/rc.local in line before exit 0
+
 ```
 sudo -i
 echo 5 > /proc/sys/vm/laptop_mode
 ```
 you also may want remove bluetooth and camera modules from kernel
+
 ```
 modprobe -r btusb
 modprobe -r uvcvideo
 ```
 One think more, switch to intel video card with prime-select
+
 ```
 sudo prime-select intel
 sudo prime-select quiery
@@ -77,6 +84,7 @@ sudo prime-select quiery
 ```
 
 After this step I got about 4W power consumption with wifi on at screen brightness 5%  running awesome wm. 
+
 ```
 xbacklight -set 5
 sleep 180
@@ -92,11 +100,13 @@ upower -d
 
 ## Some tricks
 * Swich off wifi
+
 ```
 nmcli r wifi off
 ```
 
 * For proper sleep and hybernate edit /etc/systemd/logind.conf , my noncomented lines are:
+
 ```
 InhibitDelayMaxSec=5
 HandlePowerKey=hibernate
@@ -124,7 +134,7 @@ HandleLidSwitch=suspend
 modprobe -r uvcvideo
 ```
 
-## PRIME technology with bu
+## PRIME technology with bumblebee
 
 * Installation
 
@@ -138,7 +148,8 @@ modprobe -r uvcvideo
 Edit `/etc/bumblebee/bumblebee.conf` 
   
  * adjust kernel driver to `KernelDriver=nvidia`
- * replace `nvidia-current` to `nvidia-370` in 
+ * replace `nvidia-current` to `nvidia-370` to get this in bumblebee.conf:
+ 
  ```
  # colon-separated path to the nvidia libraries
 LibraryPath=/usr/lib/nvidia-370:/usr/lib32/nvidia-370
@@ -146,20 +157,24 @@ LibraryPath=/usr/lib/nvidia-370:/usr/lib32/nvidia-370
 # default Xorg modules path
 XorgModulePath=/usr/lib/nvidia-370/xorg,/usr/lib/xorg/modules
 ```
+
 * Checking 
  * stop bumblebee service and run in debug mode
+
 ```
 sudo service bumblebee stop
 sudo bumblebeed --debug
 ```
- 
- * run glxgears in new terminal and check for ERROR lines in bumblebee output
+
+* run glxgears in new terminal and check for ERROR lines in bumblebee output
+
 ```
 primusrun glxgears
 ```
 
 normal output is :
- ```
+
+```
 [  579.639172] [INFO]Unloading module nvidia_drm
 [  579.648303] [INFO]Unloading module nvidia_modeset
 [  579.668459] [INFO]Unloading module nvidia_uvm
@@ -170,6 +185,7 @@ normal output is :
  ```
  
  bbswitch output should be OFF
+ 
  ```
 ~$ cat /proc/acpi/bbswitch; primusrun glxinfo|grep vendor ; cat /proc/acpi/bbswitch; sleep 5; cat /proc/acpi/bbswitch
 0000:01:00.0 OFF
@@ -181,6 +197,7 @@ OpenGL vendor string: NVIDIA Corporation
 ```
 
 now you can run your games:)
+
 ```
 primusrun steam
 ```
