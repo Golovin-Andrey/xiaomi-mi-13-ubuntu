@@ -134,7 +134,7 @@ HandleLidSwitch=suspend
 modprobe -r uvcvideo
 ```
 
-## PRIME technology with bumblebee
+## Optimus technology with bumblebee
 
 * Installation
 
