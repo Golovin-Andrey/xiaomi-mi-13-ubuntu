@@ -6,7 +6,7 @@
 
  * Make bootable flash drive. Personally I don't use flash drives and I have only one with some files on it. I used this wiki https://wiki.archlinux.org/index.php/Multiboot_USB_drive to prepare multi boot usb.
  * Download your favorite ubuntu distro. Without reason i chose xubuntu 16.04 (LTS).  
- * Power off laptop, power on nad press F2 to get in BIOS(?). If I do reboot F2 doesn't work.
+ * Power off laptop, power on and press F2 to get in BIOS(?). If I do reboot F2 doesn't work.
  * Select usb to boot from. If you created usb without UEFI choose legacy mode in boot menu. Save - Reboot 
  * Boot to xubuntu-desktop and run gparted in terminal: `sudo gparted`. I created 4 partitions for root  - / , for /home, swap 8Gb and EFI one (200Mb). Efi partition I did with idea to change boot linux or  windows in bios only. Thus I can make grub transparent (without menu and s etc.) when laptop start from hibernate.     
  * You may check power consumption with live usb, in terminal  `upower -d` in my case with USB plugged it was about 7W
