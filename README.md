@@ -115,6 +115,8 @@ HandleHibernateKey=hibernate
 HandleLidSwitch=suspend
 ```
 
+* You may try hibernate after some time of suspend script, best how-to is here https://wiki.debian.org/SystemdSuspendSedation
+
 * I use autofs to mount flash and samba/nfs resourses. Configs are folder autofs
 
 * For awesome wm brightness control was done with xbacklight
