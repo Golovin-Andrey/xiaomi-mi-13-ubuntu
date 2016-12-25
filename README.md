@@ -160,6 +160,13 @@ LibraryPath=/usr/lib/nvidia-370:/usr/lib32/nvidia-370
 XorgModulePath=/usr/lib/nvidia-370/xorg,/usr/lib/xorg/modules
 ```
 
+Sometimes it could be that installed bumblebee does not have configs, so easy solution is just take my configs
+```
+cd /tmp
+git clone  https://github.com/Golovin-Andrey/xiaomi-mi-13-ubuntu.git 
+cp -r /tmp/xiaomi-mi-13-ubuntu/bumblebee/ /etc
+```
+
 * Checking 
  * stop bumblebee service and run in debug mode
 
