@@ -178,12 +178,13 @@ sudo bumblebeed --debug
 ```
 
  * It could that bumblebee service could not load. It may come from ppa package issues ( I can't  check it but it happens with some user). In this case we should use bumblebee for official repo.
- ```
+
+```
  sudo add-apt-repository ppa:bumblebee/testing
  sudo apt update
  sudo apt install bumblebee
  cp -r /tmp/xiaomi-mi-13-ubuntu/bumblebee/ /etc
- ```
+```
  
  
 
