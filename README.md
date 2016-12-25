@@ -186,7 +186,7 @@ sudo bumblebeed --debug
  cp -r /tmp/xiaomi-mi-13-ubuntu/bumblebee/ /etc
 ```
  
- 
+* REBOOT in any case 
 
 * run glxgears in new terminal and check for ERROR lines in bumblebee output
 
