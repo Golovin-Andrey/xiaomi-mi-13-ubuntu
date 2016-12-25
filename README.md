@@ -167,6 +167,8 @@ git clone  https://github.com/Golovin-Andrey/xiaomi-mi-13-ubuntu.git
 cp -r /tmp/xiaomi-mi-13-ubuntu/bumblebee/ /etc
 ```
 
+
+
 * Checking 
  * stop bumblebee service and run in debug mode
 
@@ -174,6 +176,16 @@ cp -r /tmp/xiaomi-mi-13-ubuntu/bumblebee/ /etc
 sudo service bumblebee stop
 sudo bumblebeed --debug
 ```
+
+ * It could that bumblebee service could not load. It may come from ppa package issues ( I can't  check it but it happens with some user). In this case we should use bumblebee for official repo.
+ ```
+ sudo add-apt-repository ppa:bumblebee/testing
+ sudo apt update
+ sudo apt install bumblebee
+ cp -r /tmp/xiaomi-mi-13-ubuntu/bumblebee/ /etc
+ ```
+ 
+ 
 
 * run glxgears in new terminal and check for ERROR lines in bumblebee output
 
