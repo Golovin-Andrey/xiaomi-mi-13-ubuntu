@@ -173,7 +173,7 @@ cp -r /tmp/xiaomi-mi-13-ubuntu/bumblebee/ /etc
  * stop bumblebee service and run in debug mode
 
 ```
-sudo service bumblebee stop
+sudo service bumblebeed stop
 sudo bumblebeed --debug
 ```
 
