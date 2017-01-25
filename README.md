@@ -6,6 +6,7 @@
 
  * Make bootable flash drive. Personally I don't use flash drives and I have only one with some files on it. I used this wiki https://wiki.archlinux.org/index.php/Multiboot_USB_drive to prepare multi boot usb.
  * Download your favorite ubuntu distro. Without reason i chose xubuntu 16.04 (LTS).  
+  > after testing it turned out that unity DE with default settings is less efficient than XFCE : minimal power consumption 7W vs 4W.
  * Power off laptop, power on and press F2 to get in BIOS(?). If I do reboot F2 doesn't work.
  * Select usb to boot from. If you created usb without UEFI choose legacy mode in boot menu. Save - Reboot 
  * Boot to xubuntu-desktop and run gparted in terminal: `sudo gparted`. I created 4 partitions for root  - / , for /home, swap 8Gb and EFI one (200Mb). Efi partition I did with idea to change boot linux or  windows in bios only. Thus I can make grub transparent (without menu and s etc.) when laptop start from hibernate.     
@@ -75,11 +76,11 @@ you also may want remove bluetooth and camera modules from kernel
 modprobe -r btusb
 modprobe -r uvcvideo
 ```
-One think more, switch to intel video card with prime-select
+One step more, switch to intel video card with prime-select
 
 ```
 sudo prime-select intel
-sudo prime-select quiery
+sudo prime-select query
 
 ```
 
@@ -92,7 +93,8 @@ upower -d
 ```
 ![alt text](https://github.com/Golovin-Andrey/xiaomi-mi-13-ubuntu/blob/master/power-drivers.png "Power consumption")
 
-* Installation tlp and tlp radio with default settings can reduce power to bit less in my case 3.97W
+* Installation tlp and tlp radio with default settings can reduce power to bit less in my case 3.9W
+> some reports say that tlp installation make suspend much more stable.
 * In my case, when I removed  btusb, uvcvideo, iwlwifi modules  i got only 3.8W . I can conclude that these drivers are  realy efficient.
 * And finaly I removed XFCE and get no improvement in energy-rate 
 
