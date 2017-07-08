@@ -1,5 +1,5 @@
 
-#Xiaomi Air 13: minimal Ubuntu installation  and power optimization steps
+# Xiaomi Air 13: minimal Ubuntu installation  and power optimization steps
 
 
 ## Preparation
@@ -224,4 +224,12 @@ now you can run your games:)
 
 ```
 primusrun steam
+```
+### TLP fix to run bumblebee on kernel 4.8 (probably 4.8+)
+
+Edit /etc/default/tlp to adjust two options :
+```
+RUNTIME_PM_ALL=1
+RUNTIME_PM_BLACKLIST="01:00.0"
+RUNTIME_PM_DRIVER_BLACKLIST="nouveau nvidia"
 ```
